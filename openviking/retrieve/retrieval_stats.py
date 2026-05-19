@@ -7,6 +7,7 @@ the ``RetrievalObserver`` can report aggregate health and quality data
 via the observer API.
 """
 
+import math
 import threading
 from dataclasses import dataclass, field
 from typing import Dict
@@ -118,6 +119,8 @@ class RetrievalStatsCollector:
                 self._stats.zero_result_queries += 1
 
             for s in scores:
+                if not math.isfinite(s):
+                    continue
                 self._stats.total_score_sum += s
                 if s > self._stats.max_score:
                     self._stats.max_score = s

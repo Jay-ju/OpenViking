@@ -73,14 +73,14 @@ class IntentAnalyzer:
         queries = []
         for q in parsed.get("queries", []):
             try:
-                context_type = ContextType(q.get("context_type", "resource"))
+                q_context_type = ContextType(q.get("context_type", "resource"))
             except ValueError:
-                context_type = ContextType.RESOURCE
+                q_context_type = ContextType.RESOURCE
 
             queries.append(
                 TypedQuery(
                     query=q.get("query", ""),
-                    context_type=context_type,
+                    context_type=q_context_type,
                     intent=q.get("intent", ""),
                     priority=q.get("priority", 3),
                 )
